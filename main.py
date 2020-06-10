@@ -18,6 +18,10 @@ RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 WHITE = (255, 255, 255)
 
+# island
+TILES_PER_ROW = 5
+NUM_ROWS = 5
+
 # game stats
 score = 0
 lives = 3
@@ -28,13 +32,62 @@ screen = pygame.display.set_mode((600, 800))
 screen_rect = screen.get_rect()
 clock = pygame.time.Clock()
 
-def draw_text(surface, text, pos=(0,0), color=WHITE, font_size=20, anchor='topleft'):
+def draw_text(surface, text, pos=(0,0), color=WHITE, font_size=20, \
+              anchor='topleft'):
     arial = pygame.font.match_font('arial')
     font = pygame.font.Font(arial, font_size)
     text_surface = font.render(text, True, color)
     text_rect = text_surface.get_rect()
     setattr(text_rect, anchor, pos)
     surface.blit(text_surface, text_rect)
+
+class Island(pygame.sprite.Sprite):
+    def __init__(self, row, col):
+        super().__init__()
+        #sand_image = pygame.image.load('assets\sand.png').convert_alpha()
+        self.image = pygame.image.load('assets\sand.png').convert_alpha()
+        
+        #self.image = sand_image
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load('assets\pirate.png').convert_alpha()
+        
+        def update(self):
+            keys = pygame.key.get_pressed()
+            
+            # allows player to be moved with  forward, left, back, right
+            # with wasd
+            if keys[pygame.K_W]:
+                self.rect.y += 10
+            if keys[pygame.K_A]:
+                self.rect.x -= 10
+            if keys[pygame.K_S]:
+                self.rect.y -= 10  
+            if keys[pygame.K_D]:
+                self.rect.x += 10
+
+            # prevents paddle from leaving screen
+#            if self.rect.right >= screen_rect.right:
+#                self.rect.right = screen_rect.right
+#            if self.rect.left <= screen_rect.left:
+#                self.rect.left = screen_rect.left
+
+# creates a group for all sprites
+all_sprites = pygame.sprite.Group()
+islands = pygame.sprite.Group()
+
+# instantiate the player class, add player to sprite group
+player = Player()
+all_sprites.add(player)
+
+# instantiate the island class, add brick to sprite group
+for row in range(0, NUM_ROWS):
+    for col in range(0, TILES_PER_ROW):
+        island = Island(row,col)
+        all_sprites.add(island)
+        islands.add(island)
 
 # while loop that runs the game
 running = True
