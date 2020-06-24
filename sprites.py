@@ -48,10 +48,10 @@ class Player(pg.sprite.Sprite):
                 self.vel.y = 0
                 self.hit_rect.centery = self.pos.y
 
-    #TODO
-    # ADD METHOD OF DYING AND RESET BACK TO START
-    def fall_in_water(self):
-        hits = pg.sprite.spritecollide(self, self.game.water, False, collide_hit_rect)
+    # #TODO
+    # # ADD METHOD OF DYING AND RESET BACK TO START
+    # def fall_in_water(self):
+    #     hits = pg.sprite.spritecollide(self, self.game.water, False, collide_hit_rect)
 
 
     def update(self):
@@ -75,15 +75,15 @@ class Wall(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
 
-class Water(pg.sprite.Sprite):
-    def __init__(self, game, x, y):
-        self.groups = game.all_sprites, game.water
-        pg.sprite.Sprite.__init__(self, self.groups)
-        self.game = game
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        self.image.fill(BLUE)
-        self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
-        self.rect.x = x * TILESIZE
-        self.rect.y = y * TILESIZE
+# class Water(pg.sprite.Sprite):
+#     def __init__(self, game, x, y):
+#         self.groups = game.all_sprites, game.water
+#         pg.sprite.Sprite.__init__(self, self.groups)
+#         self.game = game
+#         self.image = pg.Surface((TILESIZE, TILESIZE))
+#         self.image.fill(BLUE)
+#         self.rect = self.image.get_rect()
+#         self.x = x
+#         self.y = y
+#         self.rect.x = x * TILESIZE
+#         self.rect.y = y * TILESIZE
